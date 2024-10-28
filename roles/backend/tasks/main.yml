@@ -25,7 +25,7 @@
 
 - name: Copy Backend service file
   ansible.builtin.template:
-    src: files/backend.service
+    src: templates/backend.service
     dest: /etc/systemd/system/backend.service
 
 - name: restart backend
