@@ -23,8 +23,8 @@
     path: /app
     state: latest
 
-- name: Copy config file to location
-  ansible.builtin.copy:
+- name: Copy Backend service file
+  ansible.builtin.template:
     src: files/backend.service
     dest: /etc/systemd/system/backend.service
 
@@ -35,11 +35,18 @@
     state: started
     enabled: true
 
-- name: Install Mysql client
-  ansible.builtin.dnf:
-    name: mysql
-    state: latest
-- name: Enable nodejs module
-  ansible.builtin.shell: mysql -h mysql-dev.pappik.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
+- name: Install Python Mysql client
+  ansible.builtin.pip:
+    name:
+      - PyMySQL
+      - cryptography
+    executable: pip3.9
 
-
+- name: Load schema
+  community.mysql.mysql_db:
+    state: import
+    name: all
+    target: /app/schema/backend.sql
+    login_user: root
+    login_password: ExpenseApp@1
+    login_host: mysql-dev.pappik.online
