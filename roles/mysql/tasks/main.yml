@@ -3,7 +3,7 @@
     name: mysql-server
     state: latest
 
-- name: Enable MySQL
+- name: start and Enable MySQL
   ansible.builtin.systemd_service:
     name: mysqld
     state: started
