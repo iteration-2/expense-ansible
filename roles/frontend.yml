@@ -1,0 +1,28 @@
+format_version: 10
+pipelines:
+  frontend:
+    group: defaultGroup
+    materials:
+      git-887d6e3:
+        git: https://github.com/iteration-2/expense-ansible.git
+        shallow_clone: false
+        auto_update: true
+        branch: main
+    stages:
+      - DEV:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: false
+          approval:
+            type: success
+            allow_only_on_success: false
+          jobs:
+            frontned-setup:
+              timeout: 0
+              tasks:
+                - exec:
+                    arguments:
+                      - ansible.sh
+                      - frontend
+                    command: bash
+                    run_if: passed
