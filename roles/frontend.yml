@@ -11,18 +11,19 @@ pipelines:
     stages:
       - DEV:
           fetch_materials: true
-          keep_artifacts: false
-          clean_workspace: false
+          environment_variables:
+            env: dev
           approval:
-            type: success
+            type: manual
             allow_only_on_success: false
           jobs:
-            frontned-setup:
+            frontend-setup:
               timeout: 0
               tasks:
                 - exec:
                     arguments:
                       - ansible.sh
                       - frontend
+                      - dev
                     command: bash
                     run_if: passed
