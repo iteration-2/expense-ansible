@@ -24,6 +24,5 @@ pipelines:
                     arguments:
                       - ansible.sh
                       - mysql
-                      - dev
                     command: bash
                     run_if: passed
