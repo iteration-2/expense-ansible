@@ -28,13 +28,6 @@
     src: templates/backend.service
     dest: /etc/systemd/system/backend.service
 
-- name: restart backend
-  ansible.builtin.systemd_service:
-    name: backend
-    daemon_reload: true
-    state: started
-    enabled: true
-
 - name: Install Python Mysql client
   ansible.builtin.pip:
     name:
@@ -44,7 +37,7 @@
 
 - name: Install MySQL Client
   ansible.builtin.dnf:
-    name: mysqlclient
+    name: mysql
     state: installed
 
 - name: Load schema
@@ -55,3 +48,10 @@
     login_user: root
     login_password: ExpenseApp@1
     login_host: mysql-dev.pappik.online
+
+- name: restart backend
+  ansible.builtin.systemd_service:
+    name: backend
+    daemon_reload: true
+    state: started
+    enabled: true
