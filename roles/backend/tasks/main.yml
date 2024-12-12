@@ -46,14 +46,17 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
-- name: Load schema
-  community.mysql.mysql_db:
-    state: import
-    name: all
-    target: /app/schema/backend.sql
-    login_user: root
-    login_password: ExpenseApp@1
-    login_host: mysql-dev.pappik.online
+#- name: Load schema
+#  community.mysql.mysql_db:
+#    state: import
+#    name: all
+#    target: /app/schema/backend.sql
+#    login_user: root
+#    login_password: ExpenseApp@1
+#    login_host: mysql-dev.pappik.online
+
+- name: Load schema using SHELL
+  ansible.builtin.shell: mysql -h mysql-dev.pappik.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
 
 - name: restart backend
   ansible.builtin.systemd_service:
