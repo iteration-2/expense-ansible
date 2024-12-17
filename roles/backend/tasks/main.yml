@@ -11,7 +11,7 @@
 
 - name: Create an application user
   ansible.builtin.user:
-    name: expense
+    name: "{{ app_user }}"
 
 - name: Import pre-req tasks
   ansible.builtin.import_role:
@@ -57,6 +57,11 @@
 
 - name: Load schema using SHELL
   ansible.builtin.shell: mysql -h mysql-dev.pappik.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
+
+- name: Import new relic requisites
+  ansible.builtin.import_role:
+    name: newrelic
+    tasks_from: nodejs
 
 - name: restart backend
   ansible.builtin.systemd_service:
