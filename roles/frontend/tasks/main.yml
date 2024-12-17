@@ -22,3 +22,8 @@
   ansible.builtin.systemd_service:
     name: nginx
     state: restarted
+
+- name: Import new relic requisites
+  ansible.builtin.import_role:
+    name: newrelic
+    tasks_from: nginx
